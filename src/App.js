@@ -8,6 +8,11 @@ import Cliente from './apoiocliente/apcliente.js';
 
 import usuario from './usuario.png'; // imagem do usuário
 
+import { Map } from '@vis.gl/react-maplibre';
+import { middleOfUSA } from './lib/constants'
+import YouAreHere from './components/you-are-here.js';
+
+
 // Componente reutilizável para botão de navegação
 const MenuLink = ({ to, label }) => (
   <Link to={to}>
@@ -27,21 +32,21 @@ const UserMenu = ({ isOpen }) => {
   );
 };
 
-const ImageTextContainer = () => {
-  return (
-    <div style={{ display: 'flex', alignItems: 'center', margin: '20px 0' }}>
-      <img 
-        src="usuario.png"
-        alt="Example" 
-        style={{ marginRight: '20px', width: '150px', height: '150px', objectFit: 'cover' }} 
-      />
-      <div>
-        <h2>Title</h2>
-        <p>This is some text next to the image.</p>
-      </div>
-    </div>
-  );
-};
+  function Mapa() {
+    return (
+      <Map
+        initialViewState={{
+          longitude: middleOfUSA[0],
+          latitude: middleOfUSA[1],
+          zoom: 4
+        }}
+        //mapStyle="/styles/dark.json"
+        mapStyle="https://tiles.openfreemap.org/styles/liberty"
+      >
+        <YouAreHere />
+      </Map>
+    );
+  }
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -67,8 +72,8 @@ function App() {
 
           <UserMenu isOpen={isOpen} />
         </header>
+        <Mapa />
         
-        {!(isOpen || window.location.pathname !== '/') && <ImageTextContainer />}
         <main>
           <Routes>
             <Route path="/cliente" element={<Cliente />} />
