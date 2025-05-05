@@ -11,9 +11,8 @@ export async function getLocation() {
     if (typeof json.lat === "number" && typeof json.lon === "number") {
       return [json.lon, json.lat];  // Return [longitude, latitude]
     }
-  // eslint-disable-next-line no-empty
   } catch (error) {
-    // Optionally log error if needed: console.error(error);
+    console.error("Error fetching location:", error); // Log the error for debugging
   }
   return middleOfUSA;  // If there's an error or missing data, return the default coordinates
 }

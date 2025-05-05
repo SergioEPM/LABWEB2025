@@ -11,8 +11,13 @@ export default function YouAreHere() {
   useEffect(() => {
     if (!map) return;
 
+    let hasFetched = false;
+
     const fetchLocation = async () => {
       try {
+        if (hasFetched) return;
+        hasFetched = true;
+
         const location = await getLocation();
         if (location && location !== middleOfUSA) {
           setPopupLocation(location);

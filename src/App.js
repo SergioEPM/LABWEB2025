@@ -11,6 +11,7 @@ import usuario from './usuario.png'; // imagem do usuário
 import { Map } from '@vis.gl/react-maplibre';
 import { middleOfUSA } from './lib/constants'
 import YouAreHere from './components/you-are-here.js';
+import 'maplibre-gl/dist/maplibre-gl.css';
 
 
 // Componente reutilizável para botão de navegação
@@ -41,6 +42,7 @@ const UserMenu = ({ isOpen }) => {
           zoom: 4
         }}
         //mapStyle="/styles/dark.json"
+        style={{width: 600, height: 400}}
         mapStyle="https://tiles.openfreemap.org/styles/liberty"
       >
         <YouAreHere />
