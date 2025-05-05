@@ -1,4 +1,4 @@
-import { middleOfUSA } from "./constants";
+import { middleOfPortugal } from "./constants";
 
 // `getLocation` function still works the same in JavaScript, just without the TypeScript interface
 export async function getLocation() {
@@ -14,5 +14,5 @@ export async function getLocation() {
   } catch (error) {
     console.error("Error fetching location:", error); // Log the error for debugging
   }
-  return middleOfUSA;  // If there's an error or missing data, return the default coordinates
+  return middleOfPortugal;  // If there's an error or missing data, return the default coordinates
 }

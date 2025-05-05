@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { middleOfUSA } from "../lib/constants";
+import { middleOfPortugal } from "../lib/constants";
 import { Popup, useMap } from "@vis.gl/react-maplibre";
 import { getLocation } from "../lib/api";
 import React from "react";
 
 export default function YouAreHere() {
-  const [popupLocation, setPopupLocation] = useState(middleOfUSA);
+  const [popupLocation, setPopupLocation] = useState(middleOfPortugal);
   const map = useMap()?.current;
 
   useEffect(() => {
@@ -19,9 +19,9 @@ export default function YouAreHere() {
         hasFetched = true;
 
         const location = await getLocation();
-        if (location && location !== middleOfUSA) {
+        if (location && location !== middleOfPortugal) {
           setPopupLocation(location);
-          map.flyTo({ center: location, zoom: 8 });
+          map.flyTo({ center: location, zoom: 12 });
         }
       } catch (error) {
         console.error("Failed to fetch location:", error);

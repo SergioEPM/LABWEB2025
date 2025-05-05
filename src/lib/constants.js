@@ -1,1 +1,1 @@
-export const middleOfUSA = [-100, 40];
+export const middleOfPortugal = [-10, 40];

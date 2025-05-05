@@ -9,7 +9,7 @@ import Cliente from './apoiocliente/apcliente.js';
 import usuario from './usuario.png'; // imagem do usuário
 
 import { Map } from '@vis.gl/react-maplibre';
-import { middleOfUSA } from './lib/constants'
+import { middleOfPortugal } from './lib/constants'
 import YouAreHere from './components/you-are-here.js';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
@@ -37,8 +37,8 @@ const UserMenu = ({ isOpen }) => {
     return (
       <Map
         initialViewState={{
-          longitude: middleOfUSA[0],
-          latitude: middleOfUSA[1],
+          longitude: middleOfPortugal[0],
+          latitude: middleOfPortugal[1],
           zoom: 4
         }}
         //mapStyle="/styles/dark.json"
@@ -53,6 +53,8 @@ const UserMenu = ({ isOpen }) => {
 function App() {
   const [isOpen, setIsOpen] = useState(false);
   const toggleOpen = () => setIsOpen(!isOpen);
+
+ 
 
   return (
     <Router>
@@ -74,18 +76,33 @@ function App() {
 
           <UserMenu isOpen={isOpen} />
         </header>
-        <Mapa />
         
-        <main>
-          <Routes>
-            <Route path="/cliente" element={<Cliente />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/registo" element={<Registo />} />
-          </Routes>
-        </main>
+        <main style={{ display: 'flex', height: '100vh' }}>
+  {/* Left side: Mapa */}
+  <div style={{ flex: 1 }}>
+    <Mapa />
+  </div>
+
+  {/* Right side: Routes + Text */}
+  <div style={{ flex: 1, padding: '20px', overflowY: 'auto' }}>
+    <Routes>
+      <Route path="/cliente" element={<Cliente />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/registo" element={<Registo />} />
+    </Routes>
+
+    {/* Text content */}
+    <div style={{ marginTop: '20px' }}>
+      <h2>Welcome to the App!</h2>
+      <p>This is a platform where you can register, log in, or view your client profile.</p>
+    </div>
+  </div>
+</main>
+
+
       </div>
     </Router>
-  );
+  );  
   
 
   
