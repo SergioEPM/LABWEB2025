@@ -15,20 +15,21 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 
 
 // Componente reutilizável para botão de navegação
-const MenuLink = ({ to, label }) => (
-  <Link to={to}>
+const MenuLink = ({ to, label, onClick }) => (
+  <Link to={to} onClick={onClick}>
     <button className="menu-button">{label}</button>
   </Link>
 );
 
 // Menu dropdown do usuário
-const UserMenu = ({ isOpen }) => {
+const UserMenu = ({ isOpen, onLinkClick }) => {
   if (!isOpen) return null;
+
   return (
     <nav className="user-menu">
-      <MenuLink to="/login" label="Login" />
-      <MenuLink to="/registo" label="Criar conta" />
-      <MenuLink to="/cliente" label="Apoio ao cliente" />
+      <MenuLink to="/login" label="Login" onClick={onLinkClick} />
+      <MenuLink to="/registo" label="Criar conta" onClick={onLinkClick} />
+      <MenuLink to="/cliente" label="Apoio ao cliente" onClick={onLinkClick} />
     </nav>
   );
 };
@@ -42,7 +43,7 @@ const UserMenu = ({ isOpen }) => {
           zoom: 4
         }}
         //mapStyle="/styles/dark.json"
-        style={{width: 600, height: 400}}
+        style={{width: 600, height: 600}}
         mapStyle="https://tiles.openfreemap.org/styles/liberty"
       >
         <YouAreHere />
@@ -50,64 +51,62 @@ const UserMenu = ({ isOpen }) => {
     );
   }
 
-function App() {
-  const [isOpen, setIsOpen] = useState(false);
-  const toggleOpen = () => setIsOpen(!isOpen);
-
- 
-
-  return (
-    <Router>
-      <div className="App">
-      
-        <header className="App-header">
-           {/* Quando carregar no nome faz voltar à root  */}
-          <h1 onClick={() => window.location.href = '/'} style={{ cursor: 'pointer' }}>
-            Navegação com a família
-          </h1>
-
-          <div className="search-box">
-            <input placeholder="O que estás à procura?" />
-          </div>
-
-          <button className="toggle-menu" onClick={toggleOpen} aria-label="Menu do usuário">
-            <img src={usuario} alt="Usuário" className="icon" />
-          </button>
-
-          <UserMenu isOpen={isOpen} />
-        </header>
-        
-        <main style={{ display: 'flex', height: '100vh' }}>
-  {/* Left side: Mapa */}
-  <div style={{ flex: 1 }}>
-    <Mapa />
-  </div>
-
-  {/* Right side: Routes + Text */}
-  <div style={{ flex: 1, padding: '20px', overflowY: 'auto' }}>
-    <Routes>
-      <Route path="/cliente" element={<Cliente />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/registo" element={<Registo />} />
-    </Routes>
-
-    {/* Text content */}
-    <div style={{ marginTop: '20px' }}>
-      <h2>Welcome to the App!</h2>
-      <p>This is a platform where you can register, log in, or view your client profile.</p>
-    </div>
-  </div>
-</main>
-
-
-      </div>
-    </Router>
-  );  
+  function App() {
+    const [isOpen, setIsOpen] = useState(false);
+    const [hideContent, setHideContent] = useState(false);
   
-
+    const toggleOpen = () => setIsOpen(!isOpen);
   
-}
-
+    const handleLinkClick = () => {
+      setIsOpen(false);
+      setHideContent(true); // hide both map and welcome text
+    };
+  
+    return (
+      <Router>
+        <div className="App">
+          <header className="App-header">
+            <h1 onClick={() => window.location.href = '/'} style={{ cursor: 'pointer' }}>
+              Navegação com a família
+            </h1>
+  
+            <div className="search-box">
+              <input placeholder="O que estás à procura?" />
+            </div>
+  
+            <button className="toggle-menu" onClick={toggleOpen} aria-label="Menu do usuário">
+              <img src={usuario} alt="Usuário" className="icon" />
+            </button>
+  
+            <UserMenu isOpen={isOpen} onLinkClick={handleLinkClick} />
+          </header>
+  
+          <main style={{ display: 'flex', height: '100vh' }}>
+            {!hideContent && (
+              <div style={{ flex: 1 }}>
+                <Mapa />
+              </div>
+            )}
+  
+            <div style={{ flex: 1, padding: '20px', overflowY: 'auto' }}>
+              <Routes>
+                <Route path="/cliente" element={<Cliente />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/registo" element={<Registo />} />
+              </Routes>
+  
+              {!hideContent && (
+                <div style={{ marginTop: '20px' }}>
+                  <h2>Welcome to the App!</h2>
+                  <p>This is a platform where you can register, log in, or view your client profile.</p>
+                </div>
+              )}
+            </div>
+          </main>
+        </div>
+      </Router>
+    );
+  }
 
 
 
