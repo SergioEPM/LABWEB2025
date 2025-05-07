@@ -81,39 +81,32 @@ const UserMenu = ({ isOpen, onLinkClick }) => {
             <UserMenu isOpen={isOpen} onLinkClick={handleLinkClick} />
           </header>
   
-          <main style={{ display: 'flex', height: '100vh' }}>
+          <main >
             {!hideContent && (
-              <div style={{ flex: 1 }}>
+              <div className="map-container">
                 <Mapa />
               </div>
             )}
   
-            <div style={{ flex: 1, padding: '20px', overflowY: 'auto' }}>
-              <Routes>
-                <Route path="/cliente" element={<Cliente />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/registo" element={<Registo />} />
-              </Routes>
-  
-              {!hideContent && (
-                <div style={{ marginTop: '20px' }}>
-                  <h2>Welcome to the App!</h2>
-                  <p>This is a platform where you can register, log in, or view your client profile.</p>
-                </div>
-              )}
+          <div className="content-area">
+          <Routes>
+              <Route path="/cliente" element={<Cliente />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/registo" element={<Registo />} />
+          </Routes>
+
+  {!hideContent && (
+    <div className="welcome-message">
+      <h2>Welcome to the App!</h2>
+      <p>This is a platform where you can register, log in, or view your client profile.</p>
+    </div>
+  )}
             </div>
           </main>
         </div>
       </Router>
     );
   }
-
-
-
-
-
-
-
 
 
 export default App;

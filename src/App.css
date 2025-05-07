@@ -13,6 +13,20 @@ body {
   padding-top: 10vh; /* evita que o header fixe sobre o conteúdo */
 }
 
+.map-container {
+  flex: 1;
+}
+
+.content-area {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.welcome-message {
+  margin-top: 20px;
+}
+
 
 /* Header */
 header {
@@ -116,6 +130,8 @@ header h1 {
 
 main {
   padding: 2rem;
+  display: 'flex';
+  height: '100vh';
 }
 
 
@@ -178,9 +194,4 @@ main {
   .user-menu {
     width: 95%;
   }
-
-  
-
-
-
 }
