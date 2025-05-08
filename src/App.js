@@ -34,17 +34,21 @@ const UserMenu = ({ isOpen, onLinkClick }) => {
         <>
           <MenuLink to="/login" label="Login" onClick={onLinkClick} />
           <MenuLink to="/registo" label="Criar conta" onClick={onLinkClick} />
+          <MenuLink to="/cliente" label="Apoio ao cliente" onClick={onLinkClick} />
         </>
       ) : (
-        <MenuLink
-          label="Logout"
-          onClick={() => {
-            logout();
-            onLinkClick();
-          }}
-        />
-      )}
-      <MenuLink to="/cliente" label="Apoio ao cliente" onClick={onLinkClick} />
+        <>
+
+          <MenuLink to="/historico-localizacoes" label="Histórico de Localizações" onClick={onLinkClick} />
+          <MenuLink to="/cliente" label="Apoio ao cliente" onClick={onLinkClick} />
+          <MenuLink to="/dados-pessoais" label="Dados Pessoais" onClick={onLinkClick} />
+          <MenuLink to="/followers" label="Followers" onClick={onLinkClick} />
+          <MenuLink label="Logout" onClick={() => { logout();onLinkClick();}}/>
+          
+        </>
+      )
+      }
+     
     </nav>
   );
 };
