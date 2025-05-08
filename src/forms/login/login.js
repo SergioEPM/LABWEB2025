@@ -12,29 +12,32 @@ function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError('');
-
+  
     try {
-      const response = await fetch('https://lwlc-proj-2024.onrender.com/users/login', {
+      const response = await fetch('https://api.sostrack.pt/api/v1/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'accept': 'application/json',
+          accept: 'application/json'
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, password })
       });
-
-      if (!response.ok) {
-        throw new Error('Falha na autenticação. Verifique suas credenciais.');
-      } else {
-        alert('Sessão iniciada');
-      }
-
+  
       const data = await response.json();
-      console.log(data);
+  
+      if (!response.ok) {
+        throw new Error(data.message || 'Falha na autenticação.');
+      }
+  
+      alert(`✅ Login efetuado como ${data.username}`);
+      console.log('Login response:', data);
+  
     } catch (error) {
+      console.error('Erro de login:', error);
       setError(error.message);
     }
   };
+  
 
   return (
     <div className="login">
