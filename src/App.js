@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import Login from './forms/login/login.js';
 import Registo from './forms/registros/registo.js';
 import Cliente from './apoiocliente/apcliente.js';
+import { useAuth } from './AuthContext';
 
 import usuario from './usuario.png'; // imagem do usuário
 
@@ -23,12 +24,19 @@ const MenuLink = ({ to, label, onClick }) => (
 
 // Menu dropdown do usuário
 const UserMenu = ({ isOpen, onLinkClick }) => {
+  const { isAuthenticated } = useAuth();
+
+
   if (!isOpen) return null;
 
   return (
     <nav className="user-menu">
-      <MenuLink to="/login" label="Login" onClick={onLinkClick} />
-      <MenuLink to="/registo" label="Criar conta" onClick={onLinkClick} />
+      {!isAuthenticated && (
+        <>
+          <MenuLink to="/login" label="Login" onClick={onLinkClick} />
+          <MenuLink to="/registo" label="Criar conta" onClick={onLinkClick} />
+        </>
+      )}
       <MenuLink to="/cliente" label="Apoio ao cliente" onClick={onLinkClick} />
     </nav>
   );

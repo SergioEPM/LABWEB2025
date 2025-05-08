@@ -1,10 +1,18 @@
+
 // src/forms/login/Login.js
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Routes, useNavigate } from 'react-router-dom';
 import Registo from '../registros/registo.js';
 import './login.css';
+import { useAuth } from '../../AuthContext.js';
+
 
 function Login() {
+ 
+  const { login } = useAuth(); 
+
+  const navigate = useNavigate(); 
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -28,7 +36,15 @@ function Login() {
       if (!response.ok) {
         throw new Error(data.message || 'Falha na autenticação.');
       }
-  
+      // Save the token and user in localStorage
+      login(data.token);
+      
+      // Optionally log the data to check
+      console.log('authToken saved:', localStorage.getItem('authToken'));
+      
+
+      navigate('/');
+
       alert(`✅ Login efetuado como ${data.username}`);
       console.log('Login response:', data);
   
@@ -93,3 +109,5 @@ function Login() {
 }
 
 export default Login;
+
+
