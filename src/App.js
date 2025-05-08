@@ -24,18 +24,25 @@ const MenuLink = ({ to, label, onClick }) => (
 
 // Menu dropdown do usuário
 const UserMenu = ({ isOpen, onLinkClick }) => {
-  const { isAuthenticated } = useAuth();
-
+  const { isAuthenticated, logout } = useAuth();
 
   if (!isOpen) return null;
 
   return (
     <nav className="user-menu">
-      {!isAuthenticated && (
+      {!isAuthenticated ? (
         <>
           <MenuLink to="/login" label="Login" onClick={onLinkClick} />
           <MenuLink to="/registo" label="Criar conta" onClick={onLinkClick} />
         </>
+      ) : (
+        <MenuLink
+          label="Logout"
+          onClick={() => {
+            logout();
+            onLinkClick();
+          }}
+        />
       )}
       <MenuLink to="/cliente" label="Apoio ao cliente" onClick={onLinkClick} />
     </nav>
